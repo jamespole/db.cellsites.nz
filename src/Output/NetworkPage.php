@@ -82,6 +82,7 @@ final class NetworkPage extends Page
         $string .= ' attribution: \'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community\'' . PHP_EOL;
         $string .= '});' . PHP_EOL;
         $string .= 'const map = L.map(\'map\', { fullscreenControl: true, layers: [osm] });' . PHP_EOL;
+        $string .= 'map.addControl(new L.Control.FullScreen());' . PHP_EOL;
         $string .= 'var layerControl = L.control.layers({"OpenStreetMaps": osm, "Esri.WorldImagery": Esri_WorldImagery}).addTo(map);' . PHP_EOL;
         // @codingStandardsIgnoreEnd
         $string .= 'var markers = [' . PHP_EOL;

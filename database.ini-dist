@@ -1,0 +1,5 @@
+driver = "pgsql"
+host = "hostname"
+user = "username"
+dbname = "database"
+password = "password"

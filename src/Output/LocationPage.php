@@ -1,0 +1,77 @@
+<?php
+
+declare(strict_types=1);
+
+namespace JamesPole\DbCellsitesNz\Output;
+
+use JamesPole\DbCellsitesNz\Database\Database;
+use JamesPole\DbCellsitesNz\Location;
+use JamesPole\DbCellsitesNz\Site;
+use Location\Formatter\Coordinate\DecimalDegrees;
+use Ramsey\Uuid\UuidInterface;
+use RuntimeException;
+
+final class LocationPage extends Page
+{
+    private Location $location;
+    private bool $notFound = false;
+    /** @var Site[] */
+    private array $sites;
+    public function __construct(UuidInterface $uuid)
+    {
+        parent::__construct();
+        try {
+            $database = new Database();
+            $this->location = $database->getLocation($uuid);
+            $this->sites = $database->getSitesByLocation($this->location);
+            $this->setRequiresLeaflet(true);
+        } catch (RuntimeException $e) {
+            $this->setResponseCode(404);
+            $this->notFound = true;
+        }
+    }
+    protected function generateBody(): string
+    {
+        if ($this->notFound === true) {
+            return(self::generateNotFound());
+        }
+        $string = sprintf(
+            '<h2>%s</h2>' . PHP_EOL,
+            htmlentities((string)$this->location->getCoordinate()->format(new DecimalDegrees(',', 4)))
+        );
+        if (count($this->sites) !== 0) {
+            $string .= '<h3>Sites</h3>' . PHP_EOL;
+            $string .= '<ul>' . PHP_EOL;
+            foreach ($this->sites as $thisSite) {
+                $string .= sprintf(
+                    '<li>%s: <a href="/site/%s">%s</a></li>',
+                    htmlentities($thisSite->getNetwork()->getName()),
+                    htmlentities((string)$thisSite->getUuid()),
+                    htmlentities($thisSite->getName())
+                );
+            }
+            $string .= '</ul>' . PHP_EOL;
+        }
+        $string .= '<div id="map" style="height:30em"></div>' . PHP_EOL;
+        $string .= '<script>' . PHP_EOL;
+        $string .= sprintf(
+            'const map = L.map(\'map\').setView([%s], 15);' . PHP_EOL,
+            (string)$this->location->getCoordinate()->format(new DecimalDegrees(','))
+        );
+        $string .= sprintf(
+            'L.marker([%s]).addTo(map);' . PHP_EOL,
+            (string)$this->location->getCoordinate()->format(new DecimalDegrees(','))
+        );
+        $string .= 'L.tileLayer(\'https://tile.openstreetmap.org/{z}/{x}/{y}.png\', {' . PHP_EOL;
+        $string .= ' maxZoom: 19,' . PHP_EOL;
+        $string .= ' attribution: \'&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>\'' . PHP_EOL;
+        $string .= '}).addTo(map);' . PHP_EOL;
+        $string .= '</script>' . PHP_EOL;
+        return($string);
+    }
+    private static function generateNotFound(): string
+    {
+        $string = '<h2>Error 404: Location Not Found</h2>' ;
+        return($string);
+    }
+}

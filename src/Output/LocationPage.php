@@ -58,6 +58,7 @@ final class LocationPage extends Page
             'const map = L.map(\'map\').setView([%s], 15);' . PHP_EOL,
             (string)$this->location->getCoordinate()->format(new DecimalDegrees(','))
         );
+        $string .= 'map.addControl(new L.Control.FullScreen());' . PHP_EOL;
         $string .= sprintf(
             'L.marker([%s]).addTo(map);' . PHP_EOL,
             (string)$this->location->getCoordinate()->format(new DecimalDegrees(','))

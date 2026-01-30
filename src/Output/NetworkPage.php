@@ -81,7 +81,7 @@ final class NetworkPage extends Page
         $string .= 'var Esri_WorldImagery = L.tileLayer(\'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}\', {' . PHP_EOL;
         $string .= ' attribution: \'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community\'' . PHP_EOL;
         $string .= '});' . PHP_EOL;
-        $string .= 'const map = L.map(\'map\', { fullscreenControl: true, layers: [osm] });' . PHP_EOL;
+        $string .= 'const map = L.map(\'map\', { layers: [osm] });' . PHP_EOL;
         $string .= 'map.addControl(new L.Control.FullScreen());' . PHP_EOL;
         $string .= 'var layerControl = L.control.layers({"OpenStreetMaps": osm, "Esri.WorldImagery": Esri_WorldImagery}).addTo(map);' . PHP_EOL;
         // @codingStandardsIgnoreEnd

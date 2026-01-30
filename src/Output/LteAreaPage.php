@@ -51,7 +51,8 @@ final class LteAreaPage extends Page
             $string .= '<h3>Map of nodes</h3>' . PHP_EOL;
             $string .= '<div id="map" style="height:40em"></div>' . PHP_EOL;
             $string .= '<script>' . PHP_EOL;
-            $string .= 'const map = L.map(\'map\', { fullscreenControl:true });' . PHP_EOL;
+            $string .= 'const map = L.map(\'map\');' . PHP_EOL;
+            $string .= 'map.addControl(new L.Control.FullScreen());' . PHP_EOL;
             $string .= 'var markers = [' . PHP_EOL;
             foreach ($this->nodes as $thisNode) {
                 $site = $thisNode->getSite();

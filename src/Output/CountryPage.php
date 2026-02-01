@@ -54,7 +54,7 @@ final class CountryPage extends Page
                 htmlentities((string)$thisNetwork->getUuid())
             );
             $string .= sprintf(
-                '<span>%s</span>' . PHP_EOL,
+                '<span class="fs-1">%s</span>' . PHP_EOL,
                 htmlentities($thisNetwork->getName())
             );
             $string .= sprintf(

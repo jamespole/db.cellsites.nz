@@ -33,11 +33,15 @@ final class CountryPage extends Page
         if ($this->notFound === true) {
             return(self::generateNotFound());
         }
-        $string = sprintf(
-            '<h2>%s <small class="text-body-secondary">%03d</small></h2>' . PHP_EOL,
-            $this->country->getName(),
-            $this->country->getMcc()
+        $string = '<nav aria-label="breadcrumb">' . PHP_EOL;
+        $string .= '<ol class="breadcrumb">' . PHP_EOL;
+        $string .= '<li class="breadcrumb-item"><a href="/">Home</a></li>' . PHP_EOL;
+        $string .= sprintf(
+            '<li class="breadcrumb-item active" aria-current="page">%s</li>' . PHP_EOL,
+            htmlentities($this->country->getName())
         );
+        $string .= '</ol>' . PHP_EOL;
+        $string .= '</nav>' . PHP_EOL;
         $string .= $this->generateNetworkList();
         return($string);
     }
@@ -47,9 +51,12 @@ final class CountryPage extends Page
         foreach ($this->networks as $thisNetwork) {
             $string .= sprintf(
                 '<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/network/%s">' . PHP_EOL,
-                (string)$thisNetwork->getUuid()
+                htmlentities((string)$thisNetwork->getUuid())
             );
-            $string .= sprintf('<span>%s</span>' . PHP_EOL, $thisNetwork->getName());
+            $string .= sprintf(
+                '<span>%s</span>' . PHP_EOL,
+                htmlentities($thisNetwork->getName())
+            );
             $string .= sprintf(
                 '<span class="text-secondary">%03d-%02d</span>' . PHP_EOL,
                 $thisNetwork->getCountry()->getMcc(),

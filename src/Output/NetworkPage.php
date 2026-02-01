@@ -95,7 +95,7 @@ final class NetworkPage extends Page
     private function generateBreadcrumbs(): string
     {
         $string = '<nav aria-label="breadcrumb">' . PHP_EOL;
-        $string .= '<ol class="breadcrumb mt-3">' . PHP_EOL;
+        $string .= '<ol class="breadcrumb m-3">' . PHP_EOL;
         $string .= '<li class="breadcrumb-item"><a href="/">Home</a></li>' . PHP_EOL;
         $string .= sprintf(
             '<li class="breadcrumb-item"><a href="/country/%s">%s</a></li>' . PHP_EOL,

@@ -82,7 +82,7 @@ final class SitePage extends Page
         $string .= 'map.addControl(new L.Control.FullScreen());' . PHP_EOL;
         $string .= sprintf(
             'L.marker([%s]).addTo(map);' . PHP_EOL,
-            (string$this->site->getLocation()->getCoordinate()->format(new DecimalDegrees(','))
+            (string)$this->site->getLocation()->getCoordinate()->format(new DecimalDegrees(','))
         );
         $string .= 'L.tileLayer(\'https://tile.openstreetmap.org/{z}/{x}/{y}.png\', {' . PHP_EOL;
         $string .= ' maxZoom: 19,' . PHP_EOL;

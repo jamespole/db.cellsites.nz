@@ -30,13 +30,8 @@ final class SitePage extends Page
         if ($this->notFound === true) {
             return(self::generateNotFound());
         }
-        $string = '<h2>' . $this->site->getName() . '</h2>' . PHP_EOL;
+        $string = $this->generateBreadcrumbs();
         $string .= '<ul>' . PHP_EOL;
-        $string .= sprintf(
-            '<li><b>Network:</b> <a href="/network/%s">%s</a></li>',
-            htmlentities((string)$this->site->getNetwork()->getUuid()),
-            htmlentities($this->site->getNetwork()->getName())
-        );
         $string .= sprintf(
             '<li><b>Location:</b> <a href="/location/%s">%s</a></li>',
             htmlentities((string)$this->site->getLocation()->getUuid()),
@@ -51,6 +46,29 @@ final class SitePage extends Page
             );
         }
         $string .= '</ul>' . PHP_EOL;
+        return($string);
+    }
+    private function generateBreadcrumbs(): string
+    {
+        $string = '<nav aria-label="breadcrumb">' . PHP_EOL;
+        $string .= '<ol class="breadcrumb m-3">' . PHP_EOL;
+        $string .= '<li class="breadcrumb-item"><a href="/">Home</a></li>' . PHP_EOL;
+        $string .= sprintf(
+            '<li class="breadcrumb-item"><a href="/country/%s">%s</a></li>' . PHP_EOL,
+            htmlentities((string)$this->site->getNetwork()->getCountry()->getUuid()),
+            htmlentities($this->site->getNetwork()->getCountry()->getName())
+        );
+        $string .= sprintf(
+            '<li class="breadcrumb-item"><a href="/network/%s">%s</a></li>' . PHP_EOL,
+            htmlentities((string)$this->site->getNetwork()->getUuid()),
+            htmlentities($this->site->getNetwork()->getName())
+        );
+        $string .= sprintf(
+            '<li class="breadcrumb-item active" aria-current="page">%s</li>' . PHP_EOL,
+            htmlentities($this->site->getName())
+        );
+        $string .= '</ol>' . PHP_EOL;
+        $string .= '</nav>' . PHP_EOL;
         return($string);
     }
     private static function generateNotFound(): string

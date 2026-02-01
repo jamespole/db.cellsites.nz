@@ -67,29 +67,6 @@ final class NetworkPage extends Page
         $string .= 'var group = L.featureGroup(markers).addTo(map);' . PHP_EOL;
         $string .= 'map.fitBounds(group.getBounds());' . PHP_EOL;
         $string .= '</script>' . PHP_EOL;
-        $string .= sprintf(
-            '<h3>List of sites <small>(%d sites)</small></h3>' . PHP_EOL,
-            count($this->sites)
-        );
-        $string .= '<ul>' . PHP_EOL;
-        foreach ($this->sites as $thisSite) {
-            $code = $thisSite->getCode();
-            if ($code === null) {
-                $string .= sprintf(
-                    '<li><a href="/site/%s">%s</a></li>' . PHP_EOL,
-                    htmlentities((string)$thisSite->getUuid()),
-                    htmlentities($thisSite->getName())
-                );
-            } else {
-                $string .= sprintf(
-                    '<li><a href="/site/%s">%s</a> (%s)</li>' . PHP_EOL,
-                    htmlentities((string)$thisSite->getUuid()),
-                    htmlentities($thisSite->getName()),
-                    htmlentities($code)
-                );
-            }
-        }
-        $string .= '</ul>' . PHP_EOL;
         return($string);
     }
     private function generateBreadcrumbs(): string
@@ -119,7 +96,7 @@ final class NetworkPage extends Page
                 htmlentities((string)$thisLteArea->getUuid())
             );
             $string .= sprintf(
-                '<span class="fs-4">%s</span>' . PHP_EOL,
+                '<span class="fs-5">%s</span>' . PHP_EOL,
                 htmlentities($thisLteArea->getName())
             );
             $string .= sprintf(

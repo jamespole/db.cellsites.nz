@@ -324,7 +324,7 @@ class Database
     public function getNetworks(Country $country): array
     {
         $statement = $this->pdo->getRows(
-            'SELECT id, name, mnc FROM network WHERE country = :country',
+            'SELECT id, name, mnc FROM network WHERE country = :country ORDER BY mnc',
             array((string)$country->getUuid())
         );
         /** @var Network[] */

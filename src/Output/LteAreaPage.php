@@ -99,7 +99,7 @@ final class LteAreaPage extends Page
         $string .= '<tr>' . PHP_EOL;
         $string .= '<th>eNB</th>' . PHP_EOL;
         $string .= '<th>Site</th>' . PHP_EOL;
-        $string .= '<th>Code</th>' . PHP_EOL;
+        $string .= '<th class="d-none d-lg-block">Code</th>' . PHP_EOL;
         $string .= '</tr>' . PHP_EOL;
         $string .= '</thead>' . PHP_EOL;
         $string .= '<tbody class="table-group-divider">' . PHP_EOL;
@@ -116,7 +116,7 @@ final class LteAreaPage extends Page
             );
             if($thisNode->getSite() !== null) {
                 $string .= sprintf(
-                    '<td><a href="/site/%s"><b>%s</b></a></td>' . PHP_EOL,
+                    '<td><a href="/site/%s">%s</a></td>' . PHP_EOL,
                     htmlentities((string)$thisNode->getSite()->getUuid()),
                     htmlentities($thisNode->getSite()->getName()),
                 );

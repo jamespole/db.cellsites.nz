@@ -58,7 +58,7 @@ final class CountryPage extends Page
             $string .= '</a>' . PHP_EOL;
         }
         $string .= '</div>' . PHP_EOL;
-        return($string)
+        return($string);
     }
     private static function generateNotFound(): string
     {

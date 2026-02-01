@@ -39,26 +39,7 @@ final class NetworkPage extends Page
         if ($this->notFound === true) {
             return(self::generateNotFound());
         }
-        $string = sprintf(
-            '<h2>%s %s</h2>' . PHP_EOL,
-            $this->network->getName(),
-            $this->network->getCountry()->getName()
-        );
-        $string .= '<ul>' . PHP_EOL;
-        $string .= sprintf(
-            '<li><b>Country:</b> <a href="/country/%s">%s</a></li>' . PHP_EOL,
-            htmlentities((string)$this->network->getCountry()->getUuid()),
-            htmlentities($this->network->getCountry()->getName())
-        );
-        $string .= sprintf(
-            '<li><b>MCC:</b> %d</li>' . PHP_EOL,
-            $this->network->getCountry()->getMcc()
-        );
-        $string .= sprintf(
-            '<li><b>MNC:</b> %02d</li>' . PHP_EOL,
-            $this->network->getMnc()
-        );
-        $string .= '</ul>' . PHP_EOL;
+        $string = $this->generateBreadcrumbs();
         $string .= $this->generateLteAreaList();
         $string .= '<h3>Map of sites</h3>' . PHP_EOL;
         $string .= '<div id="map" style="height:40em"></div>' . PHP_EOL;
@@ -111,6 +92,24 @@ final class NetworkPage extends Page
         $string .= '</ul>' . PHP_EOL;
         return($string);
     }
+    private function generateBreadcrumbs(): string
+    {
+        $string = '<nav aria-label="breadcrumb">' . PHP_EOL;
+        $string .= '<ol class="breadcrumb mt-3">' . PHP_EOL;
+        $string .= '<li class="breadcrumb-item"><a href="/">Home</a></li>' . PHP_EOL;
+        $string .= sprintf(
+            '<li class="breadcrumb-item"><a href="/country/%s">%s</a></li>' . PHP_EOL,
+            htmlentities((string)$this->network->getCountry()->getUuid()),
+            htmlentities($this->network->getCountry()->getName())
+        );
+        $string .= sprintf(
+            '<li class="breadcrumb-item active" aria-current="page">%s</li>' . PHP_EOL,
+            htmlentities($this->network->getName())
+        );
+        $string .= '</ol>' . PHP_EOL;
+        $string .= '</nav>' . PHP_EOL;
+        return($string);
+    }
     private function generateLteAreaList(): string
     {
         $string = '<div class="list-group">' . PHP_EOL;
@@ -120,7 +119,7 @@ final class NetworkPage extends Page
                 htmlentities((string)$thisLteArea->getUuid())
             );
             $string .= sprintf(
-                '<span class="fs-1">%s</span>' . PHP_EOL,
+                '<span class="fs-2">%s</span>' . PHP_EOL,
                 htmlentities($thisLteArea->getName())
             );
             $string .= sprintf(

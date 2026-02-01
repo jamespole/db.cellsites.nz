@@ -102,17 +102,21 @@ final class LteAreaPage extends Page
         $string .= '<th>Code</th>' . PHP_EOL;
         $string .= '</tr>' . PHP_EOL;
         $string .= '</thead>' . PHP_EOL;
-        $string .= '<tbody>' . PHP_EOL;
+        $string .= '<tbody class="table-group-divider">' . PHP_EOL;
         foreach ($this->nodes as $thisNode) {
             if($thisNode->getSite() !== null) {
                 $string .= '<tr>' . PHP_EOL;
             } else {
-                $string .= '<tr class="bg-warning-subtle">' . PHP_EOL;
+                $string .= '<tr class="table-warning">' . PHP_EOL;
             }
-            $string .= sprintf('<td>%d</td>' . PHP_EOL, $thisNode->getEnb());
+            $string .= sprintf(
+                '<td><a href="/lte/node/%s">%d</a></td>' . PHP_EOL,
+                htmlentities((string)$thisNode->getUuid()),
+                $thisNode->getEnb()
+            );
             if($thisNode->getSite() !== null) {
                 $string .= sprintf(
-                    '<td><a href="/site/%s">%s</a></td>' . PHP_EOL,
+                    '<td><a href="/site/%s"><b>%s</b></a></td>' . PHP_EOL,
                     htmlentities((string)$thisNode->getSite()->getUuid()),
                     htmlentities($thisNode->getSite()->getName()),
                 );

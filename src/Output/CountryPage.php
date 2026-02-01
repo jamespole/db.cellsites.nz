@@ -43,11 +43,10 @@ final class CountryPage extends Page
         $string .= '<h3>Networks</h3>' . PHP_EOL;
         $string .= '<div class="list-group">' . PHP_EOL;
         foreach ($this->networks as $thisNetwork) {
-            $string .= sprintf(
-                '<a class="list-group-item list-group-item-action" href="/network/%s">%s</a>' . PHP_EOL,
-                (string)$thisNetwork->getUuid(),
-                $thisNetwork->getName()
-            );
+            $string .= sprintf('<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/network/%s">' . PHP_EOL, (string)$thisNetwork->getUuid());
+            $string .= sprintf('<span>%s</span>' . PHP_EOL, $thisNetwork->getName());
+            $string .= sprintf('<span class="text-secondary">%03d-%02d</span>' . PHP_EOL, $this->network->getCountry()->getMcc(), $this->network->getMnc());
+            $string .= '</a>' . PHP_EOL;
         }
         $string .= '</div>' . PHP_EOL;
         return($string);

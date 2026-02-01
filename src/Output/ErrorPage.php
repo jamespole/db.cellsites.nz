@@ -12,7 +12,7 @@ final class ErrorPage extends Page
         parent::__construct();
         $this->error = $error;
     }
-    protected function generateBody(): string
+    protected function generateContent(): string
     {
         $this->setResponseCode($this->error);
         $string = '<h2>Error ' . $this->error . '</h2>' . PHP_EOL;

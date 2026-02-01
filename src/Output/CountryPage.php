@@ -41,15 +41,15 @@ final class CountryPage extends Page
         );
         $string .= '</ul>' . PHP_EOL;
         $string .= '<h3>Networks</h3>' . PHP_EOL;
-        $string .= '<ul>' . PHP_EOL;
+        $string .= '<div class="list-group">' . PHP_EOL;
         foreach ($this->networks as $thisNetwork) {
             $string .= sprintf(
-                '<li><a href="/network/%s">%s</a></li>' . PHP_EOL,
+                '<a class="list-group-item list-group-item-action" href="/network/%s">%s</a>' . PHP_EOL,
                 (string)$thisNetwork->getUuid(),
                 $thisNetwork->getName()
             );
         }
-        $string .= '</ul>' . PHP_EOL;
+        $string .= '</div>' . PHP_EOL;
         return($string);
     }
     private static function generateNotFound(): string

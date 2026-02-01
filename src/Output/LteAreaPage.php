@@ -37,8 +37,8 @@ final class LteAreaPage extends Page
         }
         $string = $this->generateBreadcrumbs();
         if (count($this->nodes) !== 0) {
+            $string .= $this->generateNodeTable();
             $string .= $this->generateMap();
-            $string .= $this->generateSiteList();
         }
         return($string);
     }
@@ -67,7 +67,7 @@ final class LteAreaPage extends Page
     }
     private function generateMap(): string
     {
-        $string .= '<div id="map" style="height:40em"></div>' . PHP_EOL;
+        $string = '<div id="map" style="height:40em"></div>' . PHP_EOL;
         $string .= '<script>' . PHP_EOL;
         $string .= 'const map = L.map(\'map\');' . PHP_EOL;
         $string .= 'map.addControl(new L.Control.FullScreen());' . PHP_EOL;
@@ -92,40 +92,37 @@ final class LteAreaPage extends Page
         $string .= '</script>' . PHP_EOL;
         return($string);
     }
-    private function generateSiteList(): string
+    private function generateNodeTable(): string
     {
-        $string = sprintf(
-            '<h3>Nodes <small>(%d nodes)</small></h3>' . PHP_EOL,
-            count($this->nodes)
-        );
-        $string .= '<ul>' . PHP_EOL;
+        $string = '<table class="table">' . PHP_EOL;
+        $string .= '<thead>' . PHP_EOL;
+        $string .= '<tr>' . PHP_EOL;
+        $string .= '<th>eNB</th>' . PHP_EOL;
+        $string .= '<th>Site</th>' . PHP_EOL;
+        $string .= '<th>Code</th>' . PHP_EOL;
+        $string .= '</tr>' . PHP_EOL;
+        $string .= '</thead>' . PHP_EOL;
+        $string .= '<tbody>' . PHP_EOL;
         foreach ($this->nodes as $thisNode) {
-            $site = $thisNode->getSite();
-            if ($site === null) {
+            $string .= '<tr>' . PHP_EOL;
+            $string .= sprintf('<td>%d</td>' . PHP_EOL, $thisNode->getEnb());
+            $string .= sprintf(
+                '<td><a href="/site/%s">%s</a></td>' . PHP_EOL,
+                htmlentities((string)thisNode->getSite()->getUuid()),
+                htmlentities($thisNode->getSite()->getName()),
+            );
+            if($thisNode->getSite()->getCode() !== null) {
                 $string .= sprintf(
-                    '<li>%d</li>',
-                    $thisNode->getEnb()
+                    '<td>%s</td>' . PHP_EOL,
+                    htmlentities($thisNode->getSite()->getCode())
                 );
             } else {
-                if ($site->getCode() !== null) {
-                    $string .= sprintf(
-                        '<li>%d: <a href="/site/%s">%s</a> (%s)</li>',
-                        $thisNode->getEnb(),
-                        htmlentities((string)$site->getUuid()),
-                        htmlentities($site->getName()),
-                        htmlentities($site->getCode())
-                    );
-                } else {
-                    $string .= sprintf(
-                        '<li>%d: <a href="/site/%s">%s</a></li>',
-                        $thisNode->getEnb(),
-                        htmlentities((string)$site->getUuid()),
-                        htmlentities($site->getName())
-                    );
-                }
+                $string .= '<td class="text-body-tertiary">n/a</td>' . PHP_EOL;
             }
+            $string .= '</tr>' . PHP_EOL;
         }
-        $string .= '</ul>' . PHP_EOL;
+        $string .= '</tbody>' . PHP_EOL;
+        $string .= '</table>' . PHP_EOL;
         return($string);
     }
     private static function generateNotFound(): string

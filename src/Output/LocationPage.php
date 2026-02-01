@@ -35,10 +35,7 @@ final class LocationPage extends Page
         if ($this->notFound === true) {
             return(self::generateNotFound());
         }
-        $string = sprintf(
-            '<h2>%s</h2>' . PHP_EOL,
-            htmlentities((string)$this->location->getCoordinate()->format(new DecimalDegrees(',', 4)))
-        );
+        $string = $this->generateBreadcrumbs();
         if (count($this->sites) !== 0) {
             $string .= '<h3>Sites</h3>' . PHP_EOL;
             $string .= '<ul>' . PHP_EOL;
@@ -52,7 +49,25 @@ final class LocationPage extends Page
             }
             $string .= '</ul>' . PHP_EOL;
         }
-        $string .= '<div id="map" style="height:30em"></div>' . PHP_EOL;
+        $string .= $this->generateMap();
+        return($string);
+    }
+    private function generateBreadcrumbs(): string
+    {
+        $string = '<nav aria-label="breadcrumb">' . PHP_EOL;
+        $string .= '<ol class="breadcrumb m-3">' . PHP_EOL;
+        $string .= '<li class="breadcrumb-item"><a href="/">Home</a></li>' . PHP_EOL;
+        $string .= sprintf(
+            '<li class="breadcrumb-item active" aria-current="page">%s</li>' . PHP_EOL,
+            htmlentities((string)$this->location->getCoordinate()->format(new DecimalDegrees(',', 4)))
+        );
+        $string .= '</ol>' . PHP_EOL;
+        $string .= '</nav>' . PHP_EOL;
+        return($string);
+    }
+    private function generateMap(): string
+    {
+        $string = '<div id="map" style="height:30em"></div>' . PHP_EOL;
         $string .= '<script>' . PHP_EOL;
         $string .= sprintf(
             'const map = L.map(\'map\').setView([%s], 15);' . PHP_EOL,

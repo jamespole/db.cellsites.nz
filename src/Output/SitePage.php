@@ -20,6 +20,7 @@ final class SitePage extends Page
         try {
             $database = new Database();
             $this->site = $database->getSite($uuid);
+            $this->setRequiresLeaflet(true);
         } catch (RuntimeException $e) {
             $this->setResponseCode(404);
             $this->notFound = true;

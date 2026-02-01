@@ -104,7 +104,11 @@ final class LteAreaPage extends Page
         $string .= '</thead>' . PHP_EOL;
         $string .= '<tbody>' . PHP_EOL;
         foreach ($this->nodes as $thisNode) {
-            $string .= '<tr>' . PHP_EOL;
+            if($thisNode->getSite() !== null) {
+                $string .= '<tr>' . PHP_EOL;
+            } else {
+                $string .= '<tr class="bg-warning-subtle">' . PHP_EOL;
+            }
             $string .= sprintf('<td>%d</td>' . PHP_EOL, $thisNode->getEnb());
             if($thisNode->getSite() !== null) {
                 $string .= sprintf(

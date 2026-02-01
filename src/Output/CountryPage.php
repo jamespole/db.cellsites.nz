@@ -45,7 +45,7 @@ final class CountryPage extends Page
         foreach ($this->networks as $thisNetwork) {
             $string .= sprintf('<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/network/%s">' . PHP_EOL, (string)$thisNetwork->getUuid());
             $string .= sprintf('<span>%s</span>' . PHP_EOL, $thisNetwork->getName());
-            $string .= sprintf('<span class="text-secondary">%03d-%02d</span>' . PHP_EOL, $this->network->getCountry()->getMcc(), $this->network->getMnc());
+            $string .= sprintf('<span class="text-secondary">%03d-%02d</span>' . PHP_EOL, $thisNetwork->getCountry()->getMcc(), $thisNetwork->getMnc());
             $string .= '</a>' . PHP_EOL;
         }
         $string .= '</div>' . PHP_EOL;

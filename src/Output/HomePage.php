@@ -17,7 +17,7 @@ final class HomePage extends Page
         $database = new Database();
         $this->countries = $database->getCountries();
     }
-    protected function generateBody(): string
+    protected function generateContent(): string
     {
         $string = $this->generateCountryList();        
         return($string);

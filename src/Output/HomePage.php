@@ -6,8 +6,6 @@ namespace JamesPole\DbCellsitesNz\Output;
 
 use JamesPole\DbCellsitesNz\Country;
 use JamesPole\DbCellsitesNz\Database\Database;
-use JamesPole\DbCellsitesNz\Location;
-use Location\Formatter\Coordinate\DecimalDegrees;
 
 final class HomePage extends Page
 {
@@ -21,14 +19,22 @@ final class HomePage extends Page
     }
     protected function generateBody(): string
     {
-        $string = '<h2>Countries</h2>' . PHP_EOL;
-        $string .= '<ul>' . PHP_EOL;
+        $string = $this->generateCountryList();        
+        return($string);
+    }
+    private function generateCountryList(): string
+    {
+        $string = '<div class="list-group">' . PHP_EOL;
         foreach ($this->countries as $thisCountry) {
-            $string .= '<li><a href="/country/' .
-                htmlentities((string)$thisCountry->getUuid()) . '">' .
-                htmlentities($thisCountry->getName()) . '</a></li>' . PHP_EOL;
+            $string .= sprintf(
+                '<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/country/%s">' . PHP_EOL,
+                htmlentities((string)$thisCountry->getUuid())
+            );
+            $string .= sprintf('<span>%s</span>' . PHP_EOL, htmlentities($thisCountry->getName()));
+            $string .= sprintf('<span class="text-secondary">%03d</span>' . PHP_EOL, $thisCountry->getMcc());
+            $string .= '</a>' . PHP_EOL;
         }
-        $string .= '</ul>' . PHP_EOL;
+        $string .= '</div>' . PHP_EOL;
         return($string);
     }
 }

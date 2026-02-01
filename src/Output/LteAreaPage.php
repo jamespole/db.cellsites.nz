@@ -38,38 +38,7 @@ final class LteAreaPage extends Page
         $string = $this->generateBreadcrumbs();
         if (count($this->nodes) !== 0) {
             $string .= $this->generateMap();
-            $string .= sprintf(
-                '<h3>Nodes <small>(%d nodes)</small></h3>' . PHP_EOL,
-                count($this->nodes)
-            );
-            $string .= '<ul>' . PHP_EOL;
-            foreach ($this->nodes as $thisNode) {
-                $site = $thisNode->getSite();
-                if ($site === null) {
-                    $string .= sprintf(
-                        '<li>%d</li>',
-                        $thisNode->getEnb()
-                    );
-                } else {
-                    if ($site->getCode() !== null) {
-                        $string .= sprintf(
-                            '<li>%d: <a href="/site/%s">%s</a> (%s)</li>',
-                            $thisNode->getEnb(),
-                            htmlentities((string)$site->getUuid()),
-                            htmlentities($site->getName()),
-                            htmlentities($site->getCode())
-                        );
-                    } else {
-                        $string .= sprintf(
-                            '<li>%d: <a href="/site/%s">%s</a></li>',
-                            $thisNode->getEnb(),
-                            htmlentities((string)$site->getUuid()),
-                            htmlentities($site->getName())
-                        );
-                    }
-                }
-            }
-            $string .= '</ul>' . PHP_EOL;
+            $string .= $this->generateSiteList();
         }
         return($string);
     }
@@ -96,9 +65,8 @@ final class LteAreaPage extends Page
         $string .= '</nav>' . PHP_EOL;
         return($string);
     }
-    private static function generateMap(): string
+    private function generateMap(): string
     {
-        $string = '<h3>Map of nodes</h3>' . PHP_EOL;
         $string .= '<div id="map" style="height:40em"></div>' . PHP_EOL;
         $string .= '<script>' . PHP_EOL;
         $string .= 'const map = L.map(\'map\');' . PHP_EOL;
@@ -122,6 +90,42 @@ final class LteAreaPage extends Page
         $string .= ' attribution: \'&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>\'' . PHP_EOL;
         $string .= '}).addTo(map);' . PHP_EOL;
         $string .= '</script>' . PHP_EOL;
+        return($string);
+    }
+    private function generateSiteList(): string
+    {
+        $string = sprintf(
+            '<h3>Nodes <small>(%d nodes)</small></h3>' . PHP_EOL,
+            count($this->nodes)
+        );
+        $string .= '<ul>' . PHP_EOL;
+        foreach ($this->nodes as $thisNode) {
+            $site = $thisNode->getSite();
+            if ($site === null) {
+                $string .= sprintf(
+                    '<li>%d</li>',
+                    $thisNode->getEnb()
+                );
+            } else {
+                if ($site->getCode() !== null) {
+                    $string .= sprintf(
+                        '<li>%d: <a href="/site/%s">%s</a> (%s)</li>',
+                        $thisNode->getEnb(),
+                        htmlentities((string)$site->getUuid()),
+                        htmlentities($site->getName()),
+                        htmlentities($site->getCode())
+                    );
+                } else {
+                    $string .= sprintf(
+                        '<li>%d: <a href="/site/%s">%s</a></li>',
+                        $thisNode->getEnb(),
+                        htmlentities((string)$site->getUuid()),
+                        htmlentities($site->getName())
+                    );
+                }
+            }
+        }
+        $string .= '</ul>' . PHP_EOL;
         return($string);
     }
     private static function generateNotFound(): string

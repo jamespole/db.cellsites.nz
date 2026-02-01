@@ -108,7 +108,7 @@ final class LteAreaPage extends Page
             $string .= sprintf('<td>%d</td>' . PHP_EOL, $thisNode->getEnb());
             $string .= sprintf(
                 '<td><a href="/site/%s">%s</a></td>' . PHP_EOL,
-                htmlentities((string)thisNode->getSite()->getUuid()),
+                htmlentities((string)$thisNode->getSite()->getUuid()),
                 htmlentities($thisNode->getSite()->getName()),
             );
             if($thisNode->getSite()->getCode() !== null) {

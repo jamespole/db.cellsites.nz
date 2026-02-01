@@ -59,17 +59,7 @@ final class NetworkPage extends Page
             $this->network->getMnc()
         );
         $string .= '</ul>' . PHP_EOL;
-        $string .= '<h3>LTE Areas</h3>' . PHP_EOL;
-        $string .= '<ul>' . PHP_EOL;
-        foreach ($this->lteAreas as $thisLteArea) {
-            $string .= sprintf(
-                '<li>%d: <a href="/lte/area/%s">%s</a></li>',
-                $thisLteArea->getTac(),
-                htmlentities((string)$thisLteArea->getUuid()),
-                htmlentities($thisLteArea->getName())
-            );
-        }
-        $string .= '</ul>' . PHP_EOL;
+        $string .= $this->generateLteAreaList();
         $string .= '<h3>Map of sites</h3>' . PHP_EOL;
         $string .= '<div id="map" style="height:40em"></div>' . PHP_EOL;
         $string .= '<script>' . PHP_EOL;
@@ -119,6 +109,27 @@ final class NetworkPage extends Page
             }
         }
         $string .= '</ul>' . PHP_EOL;
+        return($string);
+    }
+    private function generateLteAreaList(): string
+    {
+        $string = '<div class="list-group">' . PHP_EOL;
+        foreach ($this->lteAreas as $thisLteArea) {
+            $string .= sprintf(
+                '<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/lte/area/%s">' . PHP_EOL,
+                htmlentities((string)$thisLteArea->getUuid())
+            );
+            $string .= sprintf(
+                '<span class="fs-1">%s</span>' . PHP_EOL,
+                htmlentities($thisLteArea->getName())
+            );
+            $string .= sprintf(
+                '<span class="text-secondary">%d</span>' . PHP_EOL,
+                $thisLteArea->getTac()
+            );
+            $string .= '</a>' . PHP_EOL;
+        }
+        $string .= '</div>' . PHP_EOL;
         return($string);
     }
     private static function generateNotFound(): string

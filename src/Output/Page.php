@@ -20,7 +20,6 @@ abstract class Page extends Output
         $string .= '<meta name="viewport" content="width=device-width, initial-scale=1">' . PHP_EOL;
         $string .= '<title>Cell Sites Database</title>' . PHP_EOL;
         $string .= '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">' . PHP_EOL;
-        $string .= '<link rel="stylesheet" href="/style.css">' . PHP_EOL;
         if ($this->requiresLeaflet === true) {
             $string .= '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>' . PHP_EOL;
             $string .= '<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>' . PHP_EOL;

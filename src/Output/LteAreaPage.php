@@ -35,18 +35,7 @@ final class LteAreaPage extends Page
         if ($this->notFound === true) {
             return(self::generateNotFound());
         }
-        $string = '<h2>' . $this->area->getName() . '</h2>' . PHP_EOL;
-        $string .= '<ul>' . PHP_EOL;
-        $string .= sprintf(
-            '<li><b>TAC:</b> %d</li>',
-            $this->area->getTac()
-        );
-        $string .= sprintf(
-            '<li><b>Network:</b> <a href="/network/%s">%s</a></li>',
-            htmlentities((string)$this->area->getNetwork()->getUuid()),
-            htmlentities($this->area->getNetwork()->getName())
-        );
-        $string .= '</ul>' . PHP_EOL;
+        $string = $this->generateBreadcrumbs();
         if (count($this->nodes) !== 0) {
             $string .= '<h3>Map of nodes</h3>' . PHP_EOL;
             $string .= '<div id="map" style="height:40em"></div>' . PHP_EOL;
@@ -105,6 +94,29 @@ final class LteAreaPage extends Page
             }
             $string .= '</ul>' . PHP_EOL;
         }
+        return($string);
+    }
+    private function generateBreadcrumbs(): string
+    {
+        $string = '<nav aria-label="breadcrumb">' . PHP_EOL;
+        $string .= '<ol class="breadcrumb mt-3">' . PHP_EOL;
+        $string .= '<li class="breadcrumb-item"><a href="/">Home</a></li>' . PHP_EOL;
+        $string .= sprintf(
+            '<li class="breadcrumb-item"><a href="/country/%s">%s</a></li>' . PHP_EOL,
+            htmlentities((string)$this->area->getNetwork()->getCountry()->getUuid()),
+            htmlentities($this->area->getNetwork()->getCountry()->getName())
+        );
+        $string .= sprintf(
+            '<li class="breadcrumb-item"><a href="/netwwork/%s">%s</a></li>' . PHP_EOL,
+            htmlentities((string)$this->area->getNetwork()->getUuid()),
+            htmlentities($this->area->getNetwork()->->getName())
+        );
+        $string .= sprintf(
+            '<li class="breadcrumb-item active" aria-current="page">%s</li>' . PHP_EOL,
+            htmlentities($this->area->getName())
+        );
+        $string .= '</ol>' . PHP_EOL;
+        $string .= '</nav>' . PHP_EOL;
         return($string);
     }
     private static function generateNotFound(): string

@@ -42,7 +42,7 @@ final class SitePage extends Page
             );
         }
         $string .= '</ul>' . PHP_EOL;
-        $string .= spritnf(
+        $string .= sprintf(
             '<p><a class="btn btn-info" href="/location/%s" role="button">Location</a></p>' . PHP_EOL,
             htmlentities((string)$this->site->getLocation()->getUuid())
         );
@@ -75,19 +75,23 @@ final class SitePage extends Page
     {
         $string = '<div id="map" style="height:30em"></div>' . PHP_EOL;
         $string .= '<script>' . PHP_EOL;
+        $string .= 'var osm = L.tileLayer(\'https://tile.openstreetmap.org/{z}/{x}/{y}.png\', {' . PHP_EOL;
+        $string .= ' maxZoom: 19,' . PHP_EOL;
+        $string .= ' attribution: \'&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>\'' . PHP_EOL;
+        $string .= '});' . PHP_EOL;
+        $string .= 'var Esri_WorldImagery = L.tileLayer(\'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}\', {' . PHP_EOL;
+        $string .= ' attribution: \'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community\'' . PHP_EOL;
+        $string .= '});' . PHP_EOL;
         $string .= sprintf(
-            'const map = L.map(\'map\').setView([%s], 15);' . PHP_EOL,
+            'const map = L.map(\'map\', { layers: [osm] }).setView([%s], 15);' . PHP_EOL,
             (string)$this->site->getLocation()->getCoordinate()->format(new DecimalDegrees(','))
         );
         $string .= 'map.addControl(new L.Control.FullScreen());' . PHP_EOL;
+        $string .= 'var layerControl = L.control.layers({"OpenStreetMaps": osm, "Esri.WorldImagery": Esri_WorldImagery}).addTo(map);' . PHP_EOL;
         $string .= sprintf(
             'L.marker([%s]).addTo(map);' . PHP_EOL,
             (string)$this->site->getLocation()->getCoordinate()->format(new DecimalDegrees(','))
         );
-        $string .= 'L.tileLayer(\'https://tile.openstreetmap.org/{z}/{x}/{y}.png\', {' . PHP_EOL;
-        $string .= ' maxZoom: 19,' . PHP_EOL;
-        $string .= ' attribution: \'&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>\'' . PHP_EOL;
-        $string .= '}).addTo(map);' . PHP_EOL;
         $string .= '</script>' . PHP_EOL;
         return($string);
     }

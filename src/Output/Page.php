@@ -28,8 +28,10 @@ abstract class Page extends Output
         }
         $string .= '</head>' . PHP_EOL;
         $string .= '<body>' . PHP_EOL;
+        $string .= '<div class="container">' . PHP_EOL;
         $string .= '<h1><a href="/">Cell Sites Database</a></h1>' . PHP_EOL;
         $string .= $this->generateBody();
+        $string .= '</div>' . PHP_EOL;
         $string .= '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>' . PHP_EOL;
         $string .= '</body>' . PHP_EOL;
         $string .= '</html>' . PHP_EOL;

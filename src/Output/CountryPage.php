@@ -33,8 +33,14 @@ final class CountryPage extends Page
         if ($this->notFound === true) {
             return(self::generateNotFound());
         }
+        $string = $this->generateBreadcrumbs();
+        $string .= $this->generateNetworkList();
+        return($string);
+    }
+    private function generateBreadcrumbs(): string
+    {
         $string = '<nav aria-label="breadcrumb">' . PHP_EOL;
-        $string .= '<ol class="breadcrumb mt-3">' . PHP_EOL;
+        $string .= '<ol class="breadcrumb m-3">' . PHP_EOL;
         $string .= '<li class="breadcrumb-item"><a href="/">Home</a></li>' . PHP_EOL;
         $string .= sprintf(
             '<li class="breadcrumb-item active" aria-current="page">%s</li>' . PHP_EOL,
@@ -42,7 +48,6 @@ final class CountryPage extends Page
         );
         $string .= '</ol>' . PHP_EOL;
         $string .= '</nav>' . PHP_EOL;
-        $string .= $this->generateNetworkList();
         return($string);
     }
     private function generateNetworkList(): string

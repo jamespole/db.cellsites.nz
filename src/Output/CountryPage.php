@@ -41,7 +41,7 @@ final class CountryPage extends Page
         $string .= $this->generateNetworkList();
         return($string);
     }
-    private static function generateNetworkList(): string
+    private function generateNetworkList(): string
     {
         $string = '<div class="list-group">' . PHP_EOL;
         foreach ($this->networks as $thisNetwork) {

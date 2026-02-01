@@ -119,7 +119,7 @@ final class NetworkPage extends Page
                 htmlentities((string)$thisLteArea->getUuid())
             );
             $string .= sprintf(
-                '<span class="fs-3">%s</span>' . PHP_EOL,
+                '<span class="fs-4">%s</span>' . PHP_EOL,
                 htmlentities($thisLteArea->getName())
             );
             $string .= sprintf(

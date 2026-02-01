@@ -30,7 +30,7 @@ final class LteAreaPage extends Page
             $this->notFound = true;
         }
     }
-    protected function generateBody(): string
+    protected function generateContent(): string
     {
         if ($this->notFound === true) {
             return(self::generateNotFound());

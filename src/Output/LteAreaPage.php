@@ -122,15 +122,15 @@ final class LteAreaPage extends Page
                 );
                 if($thisNode->getSite()->getCode() !== null) {
                     $string .= sprintf(
-                        '<td>%s</td>' . PHP_EOL,
+                        '<td class="d-none d-lg-block">%s</td>' . PHP_EOL,
                         htmlentities($thisNode->getSite()->getCode())
                     );
                 } else {
-                    $string .= '<td class="text-body-tertiary">n/a</td>' . PHP_EOL;
+                    $string .= '<td class="text-body-tertiary d-none d-lg-block">n/a</td>' . PHP_EOL;
                 }
             } else {
                 $string .= '<td class="text-body-tertiary">n/a</td>' . PHP_EOL;
-                $string .= '<td class="text-body-tertiary">n/a</td>' . PHP_EOL;
+                $string .= '<td class="text-body-tertiary d-none d-lg-block">n/a</td>' . PHP_EOL;
             }
             $string .= '</tr>' . PHP_EOL;
         }

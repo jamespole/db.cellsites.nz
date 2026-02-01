@@ -43,12 +43,12 @@ final class NetworkPage extends Page
         $string .= $this->generateLteAreaList();
         $string .= sprintf(
             '<p><a class="btn btn-primary" href="/netmonitor/%03d-%02d/bts_file.csv" role="button">Download NetMonitor File...</a></p>' . PHP_EOL,
-            $this->network->getMcc(),
+            $this->network->getCountry()->getMcc(),
             $this->network->getMnc()
         );
         $string .= sprintf(
             '<p><a class="btn btn-primary" href="/netmonster//%03d-%02d" role="button">Download NetMonster File...</a></p>' . PHP_EOL,
-            $this->network->getMcc(),
+            $this->network->getCountry()->getMcc(),
             $this->network->getMnc()
         );
         $string .= '<h3>Map of sites</h3>' . PHP_EOL;

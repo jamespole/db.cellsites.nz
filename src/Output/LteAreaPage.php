@@ -109,7 +109,7 @@ final class LteAreaPage extends Page
         $string .= sprintf(
             '<li class="breadcrumb-item"><a href="/netwwork/%s">%s</a></li>' . PHP_EOL,
             htmlentities((string)$this->area->getNetwork()->getUuid()),
-            htmlentities($this->area->getNetwork()->->getName())
+            htmlentities($this->area->getNetwork()->getName())
         );
         $string .= sprintf(
             '<li class="breadcrumb-item active" aria-current="page">%s</li>' . PHP_EOL,

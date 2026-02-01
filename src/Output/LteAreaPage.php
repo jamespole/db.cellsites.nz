@@ -106,17 +106,22 @@ final class LteAreaPage extends Page
         foreach ($this->nodes as $thisNode) {
             $string .= '<tr>' . PHP_EOL;
             $string .= sprintf('<td>%d</td>' . PHP_EOL, $thisNode->getEnb());
-            $string .= sprintf(
-                '<td><a href="/site/%s">%s</a></td>' . PHP_EOL,
-                htmlentities((string)$thisNode->getSite()->getUuid()),
-                htmlentities($thisNode->getSite()->getName()),
-            );
-            if($thisNode->getSite()->getCode() !== null) {
+            if($thisNode->getSite() !== null) {
                 $string .= sprintf(
-                    '<td>%s</td>' . PHP_EOL,
-                    htmlentities($thisNode->getSite()->getCode())
+                    '<td><a href="/site/%s">%s</a></td>' . PHP_EOL,
+                    htmlentities((string)$thisNode->getSite()->getUuid()),
+                    htmlentities($thisNode->getSite()->getName()),
                 );
+                if($thisNode->getSite()->getCode() !== null) {
+                    $string .= sprintf(
+                        '<td>%s</td>' . PHP_EOL,
+                        htmlentities($thisNode->getSite()->getCode())
+                    );
+                } else {
+                    $string .= '<td class="text-body-tertiary">n/a</td>' . PHP_EOL;
+                }
             } else {
+                $string .= '<td class="text-body-tertiary">n/a</td>' . PHP_EOL;
                 $string .= '<td class="text-body-tertiary">n/a</td>' . PHP_EOL;
             }
             $string .= '</tr>' . PHP_EOL;

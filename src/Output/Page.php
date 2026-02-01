@@ -35,7 +35,7 @@ abstract class Page extends Output
         $string .= '</div>' . PHP_EOL;
         $string .= '</nav>' . PHP_EOL;
         $string .= $this->generateBody();
-        $string .= '<footer>' . PHP_EOL;
+        $string .= '<footer class="mt-3">' . PHP_EOL;
         $string .= '<p class="text-end text-body-tertiary fw-light">Copyright &copy; 2026 <a href="mailto:james@pole.net.nz" class="text-reset">James Anderson-Pole</a>.</p>' . PHP_EOL;
         $string .= '</footer>' . PHP_EOL;
         $string .= '</div>' . PHP_EOL;

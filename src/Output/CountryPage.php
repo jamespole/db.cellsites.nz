@@ -43,7 +43,7 @@ final class CountryPage extends Page
     }
     private static function generateNetworkList(): string
     {
-        $string .= '<div class="list-group">' . PHP_EOL;
+        $string = '<div class="list-group">' . PHP_EOL;
         foreach ($this->networks as $thisNetwork) {
             $string .= sprintf(
                 '<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/network/%s">' . PHP_EOL,

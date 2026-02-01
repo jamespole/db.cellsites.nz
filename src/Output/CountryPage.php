@@ -33,23 +33,32 @@ final class CountryPage extends Page
         if ($this->notFound === true) {
             return(self::generateNotFound());
         }
-        $string = '<h2>' . $this->country->getName() . '</h2>' . PHP_EOL;
-        $string .= '<ul>' . PHP_EOL;
-        $string .= sprintf(
-            '<li><b>MCC:</b> %s</li>' . PHP_EOL,
-            (string)$this->country->getMcc()
+        $string = sprintf(
+            '<h2>%s <small class="text-body-secondary">%03d</small></h2>' . PHP_EOL,
+            $this->country->getName(),
+            $this->country->getMcc()
         );
-        $string .= '</ul>' . PHP_EOL;
-        $string .= '<h3>Networks</h3>' . PHP_EOL;
+        $string .= $this->generateNetworkList();
+        return($string);
+    }
+    private static function generateNetworkList(): string
+    {
         $string .= '<div class="list-group">' . PHP_EOL;
         foreach ($this->networks as $thisNetwork) {
-            $string .= sprintf('<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/network/%s">' . PHP_EOL, (string)$thisNetwork->getUuid());
+            $string .= sprintf(
+                '<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/network/%s">' . PHP_EOL,
+                (string)$thisNetwork->getUuid()
+            );
             $string .= sprintf('<span>%s</span>' . PHP_EOL, $thisNetwork->getName());
-            $string .= sprintf('<span class="text-secondary">%03d-%02d</span>' . PHP_EOL, $thisNetwork->getCountry()->getMcc(), $thisNetwork->getMnc());
+            $string .= sprintf(
+                '<span class="text-secondary">%03d-%02d</span>' . PHP_EOL,
+                $thisNetwork->getCountry()->getMcc(),
+                $thisNetwork->getMnc()
+            );
             $string .= '</a>' . PHP_EOL;
         }
         $string .= '</div>' . PHP_EOL;
-        return($string);
+        return($string)
     }
     private static function generateNotFound(): string
     {
